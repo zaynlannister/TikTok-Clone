@@ -112,10 +112,20 @@ class Video {
 
 let videoData = [];
 
-function videoPlaylist(items) {
+function videoPlaylist(element, items) {
+    const DOMelement = document.querySelector(element);
+
     items.forEach(item => {
-        videoData.push(new Video(item))
+        videoData.push(new Video(item));
     })
+
+    function renderVideos() {
+        videoData.forEach(item => {
+            DOMelement.innerHTML += item.getTemplate();
+        })
+    }
+
+    renderVideos()
 }
 
-videoPlaylist(responseFromServer)
+videoPlaylist(".video", responseFromServer)
