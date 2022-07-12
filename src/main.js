@@ -68,6 +68,10 @@ class Video {
         }
     }
 
+    like() {
+        this.likes++
+    }
+
     getTemplate() {
         return `
                 <div class="video-data">
@@ -90,7 +94,7 @@ class Video {
                     <div class="video-data__actions">
                         <div data-id="${this.id}" class="video-data__actions-block video-data__actions-likes">
                             <i class="fas fa-heart"></i>
-                            <div class="video-data__actions-likes-amount">0</div>
+                            <div class="video-data__actions-likes-amount video__likes-amount-${this.id}">${this.likes}</div>
                         </div>
                         <div class="video-data__actions-block video-data__actions-comments">
                             <i class="fas fa-comment-dots"></i>
@@ -128,6 +132,7 @@ function findClickedVideo(target, dataId, videoList, videoPlayer) {
                     return item.id === dataId
                 });
                 checkClassList(target.classList, needVideo, item)
+                return needVideo;
             }
         })
     }
@@ -169,15 +174,13 @@ function renderComment(value, container) {
         `
 }
 
-function addLikeButton(element, checkText) {
-    if (typeof element === 'object' && checkText === 'videoButton') {
-        element.addEventListener('click', el => {
-            let amountOfLikes = element.childNodes[4]
-            amountOfLikes.innerHTML++
-        })
-    } else if (checkText === 'commentButton') {
-        element.innerHTML++
-    }
+function addLikeToComment(element) {
+    element.innerHTML++
+}
+
+function renderLikes(item) {
+    let element = document.querySelector(`.video__likes-amount-${item.id}`);
+    element.innerHTML = item.likes;
 }
 
 let videoData = [];
@@ -199,7 +202,7 @@ function videoPlaylist(element, items) {
 
     let videoPlayer = document.querySelectorAll('.video-data__show video');
     let subscribeButtons = document.querySelectorAll('.video-data__author-button button');
-    let likeButton = document.querySelectorAll('.video-data__actions-likes');
+    let likesButton = document.querySelectorAll('.video-data__actions-likes');
     let commentButtons = document.querySelectorAll('.video-data__actions-comments');
 
     // listeners
@@ -214,6 +217,16 @@ function videoPlaylist(element, items) {
     videoPlayer.forEach(video => {
         video.addEventListener('ended', () => {
             video.play()
+        })
+    })
+
+    likesButton.forEach(button => {
+        let buttonId = button.getAttribute('data-id');
+
+        button.addEventListener('click', () => {
+            let needItem = videoData.find(item => item.id === parseInt(buttonId))
+            needItem.like();
+            renderLikes(needItem);
         })
     })
 
@@ -244,7 +257,7 @@ function videoPlaylist(element, items) {
         let amountOfLikes = el.target.parentNode.querySelector('.comments-content__likes-amount')
 
         if (target === 'svg') {
-            addLikeButton(amountOfLikes, 'commentButton')
+            addLikeToComment(amountOfLikes)
         }
     })
 }
