@@ -150,10 +150,8 @@ function clickSubscribeButton(button, buttonParent) {
     })
 }
 
-function openCommentsButton(item) {
-    let commentMenu = document.querySelector('.comments');
-
-    commentMenu.classList.toggle('active')
+function openCommentsButton(item, element) {
+    element.classList.toggle('active')
 }
 
 function renderComment(value, container) {
@@ -236,15 +234,22 @@ function videoPlaylist(element, items) {
         clickSubscribeButton(button, buttonParent)
     })
 
+    let commentsMenu = document.querySelector('.comments');
+
     commentButtons.forEach(item => {
         item.addEventListener('click', () => {
-            openCommentsButton(item)
+            openCommentsButton(item, commentsMenu);
         })
     })
 
     let sendTextButton  = document.querySelector('.comments-actions__button');
     let commentsInput  = document.querySelector('.comments-actions__input input');
     let commentContainer = document.querySelector('.comments-container');
+    let commentsCloseButton = document.querySelector('.comments__close-button path');
+
+    commentsCloseButton.addEventListener('click', () => {
+        commentsMenu.classList.remove('active');
+    })
 
     sendTextButton.addEventListener('click', () => {
         let inputValue = commentsInput.value;
@@ -262,4 +267,4 @@ function videoPlaylist(element, items) {
     })
 }
 
-videoPlaylist(".video", responseFromServer)
+videoPlaylist(".video", responseFromServer);

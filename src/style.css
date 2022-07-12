@@ -8,6 +8,7 @@ input {
     outline: none;
     border: none;
 }
+
 button {
     color: #fff;
     cursor: pointer;
@@ -65,6 +66,11 @@ a:hover {
     background-color: #f1f1f1;
     padding: 11px 80px 11px 30px;
     border-radius: 20px;
+    transition: 100ms ease;
+}
+
+.header-action input:focus {
+    border: 1px solid #7D7C7CFF;
 }
 
 .header-action svg {
@@ -91,6 +97,11 @@ a:hover {
     border-radius: 4px;
     border: 1px solid #ff4040;
     background-color: #ff4040;
+    transition: 100ms ease;
+}
+
+.header-authorization__button button:hover {
+    background-color: #da1d1d;
 }
 
 .header-ellipsis {
@@ -142,9 +153,15 @@ a:hover {
 }
 
 .rec-acc__data {
+    cursor: pointer;
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    transition: 80ms ease;
+}
+
+.rec-acc__data:hover {
+    background-color: #f3f3f3;
 }
 
 .rec-acc__image, .comments-content__img {
@@ -364,15 +381,23 @@ a:hover {
     user-select: none;
 }
 
+.comments__close-button {
+    margin-top: 20px;
+}
+
+.comments__close-button path {
+    cursor: pointer;
+}
+
 /*mobile*/
 
-@media (max-width: 768px) {
-    .recommendation {
-        display: none;
+@media (max-width: 1190px) {
+    .container {
+        width: 90%;
     }
 
-    .container {
-        width: 600px;
+    .recommendation {
+        display: none;
     }
 
     .main {
@@ -381,6 +406,20 @@ a:hover {
 
     .video {
         padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .video-data__actions {
+        right: unset;
+        left: 445px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 600px;
     }
 
     .header-authorization {
@@ -393,6 +432,10 @@ a:hover {
 
     .header-authorization__text {
         display: none;
+    }
+
+    .video-data__actions-likes-amount, .video-data__actions-shares-amount, .video-data__actions-comments-amount {
+        margin-left: 20px;
     }
 
     .video-data__author {
@@ -456,5 +499,11 @@ a:hover {
 
     .comments-content {
         padding: 12px 0;
+    }
+}
+
+@media (max-width: 635px) {
+    .container {
+        width: 500px;
     }
 }
